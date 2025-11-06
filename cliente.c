@@ -4,7 +4,7 @@
 
 /*
 ===========================================
-| MÓDULO CLIENTE - RESPONSÁVEL: Pessoa 2 |
+| MÓDULO CLIENTE - RESPONSÁVEL: Pessoa 3 |
 ===========================================
 Função: Cadastrar cliente e inserir na fila correta.
 
