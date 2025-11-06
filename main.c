@@ -22,7 +22,7 @@ void menu()
 
 int main()
 {
-    // Fila filaComum, filaPrioritaria;
+    Fila filaComum, filaPrioritaria;
     // Pilha historico;
     int opcao;
 
@@ -38,7 +38,7 @@ int main()
         switch (opcao)
         {
         case 1:
-            // cadastrarCliente(&filaComum, &filaPrioritaria);
+            cadastrarCliente(&filaComum, &filaPrioritaria);
             break;
         case 2:
             // atenderCliente(&filaPrioritaria, &filaComum, &historico);
