@@ -5,20 +5,20 @@
 =======================================
 | MÓDULO FILA - RESPONSÁVEL: Pessoa 1 |
 =======================================
-Descrição: Este arquivo contém a implementação das operações de fila
+Descrição: Implementação das operações de fila (buffer circular)
 para gerenciamento da ordem de atendimento dos clientes.
 
 Tarefas Pendentes:
 ✅ Já implementado: inicializarFila(), filaVazia()
-🔧 A implementar: enfileirar(), desenfileirar(), exibirFila()
-Prazo de entrega sugerido: 06/11 até 08/11
+✅ Implementado agora: enfileirar(), desenfileirar(), exibirFila()
 */
 
 void inicializarFila(Fila *f)
 {
     f->inicio = 0;
     f->fim = 0;
-    // TODO: verificar necessidade de iniciar todos os elementos
+    // Opcional: limpar o vetor
+    // for (int i = 0; i < MAX_FILA; i++) f->clientes[i] = (Cliente){"", 0, 0};
 }
 
 int filaVazia(Fila *f)
@@ -28,29 +28,46 @@ int filaVazia(Fila *f)
 
 int enfileirar(Fila *f, Cliente c)
 {
-    // TODO: Implementar lógica de inserção na fila
-    // Exemplo:
-    // 1️⃣ Verificar se a fila está cheia
-    // 2️⃣ Inserir cliente na posição 'fim'
-    // 3️⃣ Incrementar fim (com tratamento circular futuramente)
-    printf("⚠️ Função enfileirar não implementada ainda.\n");
-    return 0;
+    // cheia quando avançar o fim alcança o início
+    int proximoFim = (f->fim + 1) % MAX_FILA;
+    if (proximoFim == f->inicio) {
+        // fila cheia
+        fprintf(stderr, "Erro: fila cheia. Nao foi possivel enfileirar \"%s\".\n", c.nome);
+        return 0; // falha
+    }
+
+    f->clientes[f->fim] = c;   
+    f->fim = proximoFim;       
+    return 1;
 }
 
 Cliente desenfileirar(Fila *f)
 {
-    // TODO: Implementar lógica de remoção da fila
-    // 1️⃣ Verificar se está vazia
-    // 2️⃣ Retornar cliente da posição 'inicio'
-    // 3️⃣ Incrementar inicio
-    printf("⚠️ Função desenfileirar não implementada ainda.\n");
+    if (filaVazia(f)) {
+        fprintf(stderr, "Erro: fila vazia. Nao ha cliente para desenfileirar.\n");
+        Cliente vazio = {"", 0, 0};
+        return vazio; 
+    }
 
-    Cliente c = {"", 0, 0}; // Cliente vazio temporário
+    Cliente c = f->clientes[f->inicio];     
+    f->inicio = (f->inicio + 1) % MAX_FILA; 
     return c;
 }
 
 void exibirFila(Fila *f)
 {
-    // TODO: Mostrar todos os clientes da fila
-    printf("⚠️ Função exibirFila não implementada ainda.\n");
+    if (filaVazia(f)) {
+        printf("[Fila vazia]\n");
+        return;
+    }
+
+    printf("Fila (inicio=%d, fim=%d):\n", f->inicio, f->fim);
+    int i = f->inicio;
+    int pos = 0;
+    while (i != f->fim) {
+        Cliente *c = &f->clientes[i];
+        printf(" %02d) Nome: %s | Idade: %d | Prioridade: %d\n",
+               ++pos, c->nome, c->idade, c->prioridade);
+        i = (i + 1) % MAX_FILA;
+    }
 }
