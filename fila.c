@@ -1,24 +1,11 @@
 #include <stdio.h>
 #include "fila.h"
 
-/*
-=======================================
-| MÓDULO FILA - RESPONSÁVEL: Pessoa 1 |
-=======================================
-Descrição: Implementação das operações de fila (buffer circular)
-para gerenciamento da ordem de atendimento dos clientes.
-
-Tarefas Pendentes:
-✅ Já implementado: inicializarFila(), filaVazia()
-✅ Implementado agora: enfileirar(), desenfileirar(), exibirFila()
-*/
 
 void inicializarFila(Fila *f)
 {
     f->inicio = 0;
     f->fim = 0;
-    // Opcional: limpar o vetor
-    // for (int i = 0; i < MAX_FILA; i++) f->clientes[i] = (Cliente){"", 0, 0};
 }
 
 int filaVazia(Fila *f)
@@ -28,12 +15,10 @@ int filaVazia(Fila *f)
 
 int enfileirar(Fila *f, Cliente c)
 {
-    // cheia quando avançar o fim alcança o início
     int proximoFim = (f->fim + 1) % MAX_FILA;
     if (proximoFim == f->inicio) {
-        // fila cheia
         fprintf(stderr, "Erro: fila cheia. Nao foi possivel enfileirar \"%s\".\n", c.nome);
-        return 0; // falha
+        return 0;
     }
 
     f->clientes[f->fim] = c;   

@@ -1,10 +1,8 @@
 #ifndef FILA_H
 #define FILA_H
 
-// Capacidade da fila
 #define MAX_FILA 100
 
-// Estrutura básica do cliente
 typedef struct cliente
 {
     char nome[50];
@@ -12,7 +10,6 @@ typedef struct cliente
     int prioridade;
 } Cliente;
 
-// Estrutura da fila (buffer circular)
 typedef struct fila
 {
     Cliente clientes[MAX_FILA];
@@ -20,7 +17,6 @@ typedef struct fila
     int fim;
 } Fila;
 
-// Funções do módulo Fila
 void inicializarFila(Fila *f);
 int  filaVazia(Fila *f);
 int  enfileirar(Fila *f, Cliente c);
