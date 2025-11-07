@@ -23,6 +23,12 @@ void cadastrarCliente(Fila *filaComum, Fila *filaPrioritaria)
 {
     printf("\n=== CADASTRO DE CLIENTE ===\n");
 
+    // Esse void deve ser tira a partir do momento que a função for implementada
+    (void)filaComum;
+    (void)filaPrioritaria;
+
+    // Esse void acima serve para evitar warning de variável não usada.
+
     // ⚠️ A Lógica real do cadastro deve ser implementada futuramente!
     // Dicas para quem for implementar:
     //

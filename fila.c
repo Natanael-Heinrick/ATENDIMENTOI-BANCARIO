@@ -52,7 +52,7 @@ void exibirFila(Fila *f)
     while (i != f->fim) {
         Cliente *c = &f->clientes[i];
         printf(" %02d) Nome: %s | Idade: %d | Prioridade: %d\n",
-               ++pos, c->nome, c->idade, c->prioridade);
+            ++pos, c->nome, c->idade, c->prioridade);
         i = (i + 1) % MAX_FILA;
     }
 }
