@@ -3,6 +3,7 @@
 #include "fila.h"
 #include "pilha.h"
 #include "cliente.h"
+#include "ordenacao.h"
 
 // Funções de outros módulos
 void cadastrarCliente(Fila *comum, Fila *prioritaria);
@@ -44,6 +45,9 @@ int main()
             atenderCliente(&filaPrioritaria, &filaComum, &historico);
             break;
         case 3:
+            ordenarFilaPrioridade(&filaPrioritaria);
+            ordenarFilaComum(&filaComum);
+
             printf("\n--- Fila Prioritária ---\n");
             exibirFila(&filaPrioritaria);
             printf("\n--- Fila Comum ---\n");
