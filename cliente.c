@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "cliente.h"
 #include "fila.h"
+#include <string.h>
+
 
 /*
 ===========================================
@@ -27,29 +29,37 @@ void cadastrarCliente(Fila *filaComum, Fila *filaPrioritaria)
     (void)filaComum;
     (void)filaPrioritaria;
 
-    // Esse void acima serve para evitar warning de variável não usada.
+    char nomeTmp[50];
+    int idadeTmp;
 
-    // ⚠️ A Lógica real do cadastro deve ser implementada futuramente!
-    // Dicas para quem for implementar:
-    //
-    // char nomeTmp[50];
-    // int idadeTmp;
-    //
-    // printf("Nome: ");
-    // scanf("%s", nomeTmp);
-    //
-    // printf("Idade: ");
-    // scanf("%d", &idadeTmp);
-    //
-    // Cliente novoCliente;
-    // strcpy(novoCliente.nome, nomeTmp);
-    // novoCliente.idade = idadeTmp;
-    // novoCliente.prioridade = (idadeTmp >= 65);
-    //
-    // if(novoCliente.prioridade)
-    //     enfileirar(filaPrioritaria, novoCliente);
-    // else
-    //     enfileirar(filaComum, novoCliente);
+    printf("\n=== CADASTRO DE CLIENTE ===\n");
 
-    printf("⚠️ Função ainda não implementada. (Tarefa de casa!)\n");
+    printf("Nome do Cliente: ");
+    if (scanf("%49s", nomeTmp) != 1) {
+        printf("⚠️ Erro na leitura do nome.\n");
+        return;
+    }
+
+    printf("Idade do Cliente: ");
+    if (scanf("%d", &idadeTmp) != 1) {
+        printf("⚠️ Erro na leitura da idade. Tente novamente.\n");
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF); 
+        return;
+    }
+
+    Cliente novoCliente;
+    strcpy(novoCliente.nome, nomeTmp); 
+    novoCliente.idade = idadeTmp;
+    
+    
+    novoCliente.prioridade = (idadeTmp >= 65); 
+
+    if (novoCliente.prioridade) {
+        printf("✅ Cliente %s (idade %d) inserido na FILA PRIORITÁRIA.\n", novoCliente.nome, novoCliente.idade);
+        enfileirar(filaPrioritaria, novoCliente);
+    } else {
+        printf("✅ Cliente %s (idade %d) inserido na FILA COMUM.\n", novoCliente.nome, novoCliente.idade);
+        enfileirar(filaComum, novoCliente);
+    }
 }
