@@ -1,61 +1,67 @@
-#include <stdio.h>
 #include "ordenacao.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-/*
-===============================================
-| ORDENAÇÃO DAS FILAS - RESPONSÁVEL: Pessoa 4 |
-===============================================
 
-📌 Objetivo:
-Aplicar um algoritmo de ordenação diretamente
-NO ARRAY DA FILA
+FilaPrioritaria* criarFilaPrioritaria(int capacidade) {
+    FilaPrioritaria *f = (FilaPrioritaria*) malloc(sizeof(FilaPrioritaria));
+    if (f == NULL) {
+        printf("Erro de alocacao (fila prioritaria)!\n");
+        exit(1);
+    }
 
-IMPORTANTE ⚠️:
-Fila é um array CIRCULAR!
-➡️ Pessoa 4 deve tratar índices com módulo (% MAX_FILA)
 
-Sugestões de algoritmos:
-✅ Prioritária: Bubble Sort (estrutura pequena)
-✅ Comum: Insertion Sort (melhor para inserções)
+    f->array = (Cliente*) malloc(capacidade * sizeof(Cliente));
+    if (f->array == NULL) {
+        printf("Erro de alocacao (array de clientes da fila prioritaria)!\n");
+        free(f);
+        exit(1);
+    }
 
-------------------------------------------------
-⚙️ REGRAS PARA ORDENAR
-Fila Prioritária:
-- Clientes prioritários sempre primeiro
-- Dentro do grupo, ordenar por idade DESC (mais velho → primeiro)
-
-Fila Comum:
-- Manter ordem de chegada (não alterar posições antigas!)
-- Insertion sort respeita melhor o histórico
-------------------------------------------------
-*/
-
-// Auxiliar para acessar posições circulares
-int idx(Fila *f, int pos)
-{
-    return (f->inicio + pos) % MAX_FILA;
+    f->tamanho = 0;
+    f->capacidade = capacidade;
+    return f;
 }
 
-void ordenarFilaPrioridade(Fila *fila)
-{
-    // TODO: implementar lógica de ordenação (Ex.: Bubble Sort)
-    // Dica:
-    // - Usar a função idx() para comparar e trocar clientes
-    // - Utilizar fila->clientes[...] para manipular dados diretamente
+
+void trocar(Cliente *a, Cliente *b) {
+    Cliente temp = *a;
+    *a = *b;
+    *b = temp;
 }
 
-void ordenarFilaComum(Fila *fila)
-{
-    // TODO: implementar lógica de ordenação (Ex.: Insertion Sort)
-    // Dica:
-    // - Manter a ordem de chegada ao máximo
-    // - Usar idx() para percorrer o array circular
+//Funções de Navegação
+int pai(int i) { return (i - 1) / 2; }
+int filhoEsquerda(int i) { return (2 * i) + 1; }
+int filhoDireita(int i) { return (2 * i) + 2; }
+
+
+void prioridadeParaCima(FilaPrioritaria *f, int i) {
+
+    while (i != 0 && f->array[i].idade > f->array[pai(i)].idade) {
+
+        trocar(&f->array[i], &f->array[pai(i)]);
+        i = pai(i);
+    }
 }
 
-/*
-Após a implementação:
-Essas funções serão chamadas:
-- Após o cadastro de um cliente
-- Quando o usuário solicitar ordenação
-- Antes do atendimento
-*/
+void prioridadeParaBaixo(FilaPrioritaria *f, int i) {
+    int maior = i;
+    int esq = filhoEsquerda(i);
+    int dir = filhoDireita(i);
+
+
+    if (esq < f->tamanho && f->array[esq].idade > f->array[maior].idade) {
+        maior = esq;
+    }
+
+
+    if (dir < f->tamanho && f->array[dir].idade > f->array[maior].idade) {
+        maior = dir;
+    }
+
+    if (maior != i) {
+        trocar(&f->array[i], &f->array[maior]);
+        prioridadeParaBaixo(f, maior);
+    }
+}

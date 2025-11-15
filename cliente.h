@@ -3,6 +3,8 @@
 
 #include "fila.h"
 
-void cadastrarCliente(Fila *filaComum, Fila *filaPrioritaria);
+
+
+void cadastrarCliente(Fila *filaComum, FilaPrioritaria *filaPrioritaria);
 
 #endif
