@@ -3,11 +3,8 @@
 #include "fila.h"
 #include "pilha.h"
 #include "cliente.h"
+#include "ordenacao.h"
 
-// Funções de outros módulos
-// void cadastrarCliente(Fila *comum, Fila *prioritaria);
-// void atenderCliente(Fila *prioritaria, Fila *comum, Pilha *historico);
-// depois será adicionado: funções de ordenação
 
 void menu()
 {
@@ -22,13 +19,15 @@ void menu()
 
 int main()
 {
-    Fila filaComum, filaPrioritaria;
-    // Pilha historico;
+    Fila filaComum;
+    FilaPrioritaria *filaPrioritaria;
+    Pilha historico;
     int opcao;
+    inicializarFila(&filaComum);
 
-    // inicializarFila(&filaComum);
-    // inicializarFila(&filaPrioritaria);
-    // inicializarPilha(&historico);
+    filaPrioritaria = criarFilaPrioritaria(MAX_FILA);
+
+    inicializarPilha(&historico);
 
     do
     {
@@ -38,19 +37,21 @@ int main()
         switch (opcao)
         {
         case 1:
-            cadastrarCliente(&filaComum, &filaPrioritaria);
+            cadastrarCliente(&filaComum, filaPrioritaria);
             break;
         case 2:
-            // atenderCliente(&filaPrioritaria, &filaComum, &historico);
+           // atenderCliente(&filaPrioritaria, &filaComum, &historico);
             break;
         case 3:
+
+
             printf("\n--- Fila Prioritária ---\n");
-            // exibirFila(&filaPrioritaria);
+            exibirFilaPrioritaria(filaPrioritaria);
             printf("\n--- Fila Comum ---\n");
-            // exibirFila(&filaComum);
+            exibirFila(&filaComum);
             break;
         case 4:
-            //  exibirPilha(&historico);
+            exibirPilha(&historico);
             break;
         case 0:
             printf("Saindo...\n");
@@ -59,6 +60,7 @@ int main()
             printf("Opção inválida!\n");
         }
     } while (opcao != 0);
-
+    free(filaPrioritaria->array);
+    free(filaPrioritaria);
     return 0;
 }

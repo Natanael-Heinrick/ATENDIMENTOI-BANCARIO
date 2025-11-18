@@ -3,7 +3,7 @@
 #include "fila.h"
 #include <string.h>
 
-void cadastrarCliente(Fila *filaComum, Fila *filaPrioritaria)
+void cadastrarCliente(Fila *filaComum, FilaPrioritaria *filaPrioritaria)
 {
     printf("\n=== CADASTRO DE CLIENTE ===\n");
 
@@ -38,7 +38,7 @@ void cadastrarCliente(Fila *filaComum, Fila *filaPrioritaria)
     if (novoCliente.prioridade)
     {
         printf("✅ Cliente %s (idade %d) inserido na FILA PRIORITÁRIA.\n", novoCliente.nome, novoCliente.idade);
-        enfileirar(filaPrioritaria, novoCliente);
+        inserirClientePrioritario(filaPrioritaria, novoCliente);
     }
     else
     {

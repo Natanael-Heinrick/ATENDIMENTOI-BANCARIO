@@ -1,1 +1,10 @@
-output/
+shell
+
+# Arquivos de compilação
+*.gch
+*.exe
+*.o
+
+#configurações do VScode
+.vscode
+
