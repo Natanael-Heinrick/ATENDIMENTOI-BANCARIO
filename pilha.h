@@ -2,6 +2,8 @@
 #define PILHA_H
 
 #include "cliente.h"
+#include "error.h"
+
 
 // ===========================================
 // 📌 MÓDULO PILHA - RESPONSÁVEL: Pessoa 2

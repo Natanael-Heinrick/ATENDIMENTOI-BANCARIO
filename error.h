@@ -1,32 +1,29 @@
 #ifndef ERROR_H
 #define ERROR_H
 
-/*
- * Código de erro centralizado para o sistema bancário.
- * Use esses códigos como retorno das funções (ou converta para int se preferir).
- */
+// Lista de códigos de erro usados no sistema
 typedef enum {
-    ERRO_NENHUM = 0,        // Sem erro
-    ERRO_FILA_CHEIA,       // Tentar enfileirar em fila cheia
-    ERRO_FILA_VAZIA,       // Tentar desenfileirar de fila vazia
-    ERRO_PILHA_CHEIA,      // Push em pilha cheia
-    ERRO_PILHA_VAZIA,      // Pop em pilha vazia
-    ERRO_MEMORIA,          // Falha de alocação dinâmica
-    ERRO_CLIENTE_INVALIDO, // Dados do cliente inválidos
-    ERRO_INDEX_FORA,       // Índice fora do intervalo
-    ERRO_DESCONHECIDO      // Qualquer erro não previsto
+    ERR_SUCESSO = 0,
+    ERR_FILA_CHEIA,
+    ERR_FILA_VAZIA,
+    ERR_PILHA_CHEIA,
+    ERR_PILHA_VAZIA,
+    ERR_MEMORIA,
+    ERR_CLIENTE_INVALIDO,
+    ERR_DESCONHECIDO
 } CodigoErro;
 
-/*
- * exibirErro: imprime uma mensagem amigável para o usuário (stdout).
- * - Ideal para ser chamada por camadas de interface (ex: main).
- */
+// ===============================
+// Funções do módulo de erro
+// ===============================
+
+// Exibe uma mensagem descritiva na tela
 void exibirErro(CodigoErro erro);
 
-/*
- * erroToString: retorna uma string (const char*) curta representando o erro.
- * - Útil para logs, retorno em interfaces gráficas, ou testes.
- */
+// Retorna texto correspondente ao erro
 const char* erroToString(CodigoErro erro);
 
-#endif // ERROR_H
+// (Opcional) inicialização de erros
+void inicializarSistemaErros();
+
+#endif
