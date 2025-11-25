@@ -1,59 +1,35 @@
 #include <stdio.h>
-#include <string.h>
 #include "pilha.h"
+#include "error.h"
 
-/*
-===========================================
-| MÓDULO PILHA - RESPONSÁVEL: Pessoa 2   |
-===========================================
-Função: Armazenar histórico de clientes atendidos
-
-📌 IMPORTANTE:
-- Histórico é uma PILHA — Último que entra, primeiro que sai (LIFO)
-- O atendimento enviará cada cliente atendido para essa pilha
-*/
-
-// Inicializar pilha: topo inicia em -1
-void inicializarPilha(Pilha *p)
-{
-    // TODO: implementar
+void inicializarPilha(Pilha *p) {
+    p->topo = -1;
 }
 
-// Retorna 1 se pilha estiver vazia
-int pilhaVazia(Pilha *p)
-{
-    // TODO: implementar
-    return 0;
+void empilhar(Pilha *p, Cliente c) {
+    if (p->topo >= MAX_PILHA - 1) {
+        tratar_erro(3); // Erro: Pilha Cheia
+        return;
+    }
+    p->dados[++(p->topo)] = c;
 }
 
-// Retorna 1 se pilha estiver cheia
-int pilhaCheia(Pilha *p)
-{
-    // TODO: implementar
-    return 0;
+Cliente desempilhar(Pilha *p) {
+    Cliente c = {"", "", "", 0, 0, 0, 0};
+    if (p->topo == -1) {
+        tratar_erro(4); // Erro: Pilha Vazia
+        return c;
+    }
+    return p->dados[(p->topo)--];
 }
 
-// Empilha um cliente
-int empilhar(Pilha *p, Cliente c)
-{
-    // TODO: implementar
-    // Dica: verificar se está cheia antes
-    // Caso cheia: imprimir erro e retornar 0
-    return 1;
-}
-
-// Desempilha: retorna o cliente mais recente
-Cliente desempilhar(Pilha *p)
-{
-    // TODO: implementar
-    // Dica: se vazia, retornar Cliente vazio
-    Cliente vazio = {"", 0, 0};
-    return vazio;
-}
-
-// Exibe histórico do atendimento (do topo → base)
-void exibirPilha(Pilha *p)
-{
-    // TODO: implementar
-    // Dica: mostrar ordem do mais recente para o mais antigo
+void exibirHistorico(Pilha *p) {
+    if (p->topo == -1) {
+        printf("Historico vazio.\n");
+        return;
+    }
+    printf("--- Historico de Atendimentos (Recentes primeiro) ---\n");
+    for (int i = p->topo; i >= 0; i--) {
+        printf("- %s (%s) \n", p->dados[i].nome, p->dados[i].tipo);
+    }
 }
