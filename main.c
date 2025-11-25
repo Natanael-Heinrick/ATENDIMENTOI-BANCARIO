@@ -4,6 +4,8 @@
 #include "pilha.h"
 #include "cliente.h"
 #include "ordenacao.h"
+#include "error.h"
+
 
 
 void menu()
@@ -23,6 +25,9 @@ int main()
     FilaPrioritaria *filaPrioritaria;
     Pilha historico;
     int opcao;
+
+    inicializarSistemaErros();
+    
     inicializarFila(&filaComum);
 
     filaPrioritaria = criarFilaPrioritaria(MAX_FILA);

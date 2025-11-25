@@ -2,6 +2,7 @@
 #define CLIENT_H
 
 #include "fila.h"
+#include "error.h"
 
 
 

@@ -1,5 +1,6 @@
 #ifndef FILA_H
 #define FILA_H
+#include "error.h"
 
 #define MAX_FILA 100
 
