@@ -1,67 +1,55 @@
-#include "ordenacao.h"
 #include <stdio.h>
-#include <stdlib.h>
+#include "fila.h"
+#include "error.h"
 
-
-FilaPrioritaria* criarFilaPrioritaria(int capacidade) {
-    FilaPrioritaria *f = (FilaPrioritaria*) malloc(sizeof(FilaPrioritaria));
-    if (f == NULL) {
-        printf("Erro de alocacao (fila prioritaria)!\n");
-        exit(1);
-    }
-
-
-    f->array = (Cliente*) malloc(capacidade * sizeof(Cliente));
-    if (f->array == NULL) {
-        printf("Erro de alocacao (array de clientes da fila prioritaria)!\n");
-        free(f);
-        exit(1);
-    }
-
-    f->tamanho = 0;
-    f->capacidade = capacidade;
-    return f;
+void inicializarFila(Fila *f) {
+    f->inicio = 0;
+    f->fim = 0;
+    f->quantidade = 0;
 }
 
-
-void trocar(Cliente *a, Cliente *b) {
-    Cliente temp = *a;
-    *a = *b;
-    *b = temp;
+int filaVazia(Fila *f) {
+    return (f->quantidade == 0);
 }
 
-//Funções de Navegação
-int pai(int i) { return (i - 1) / 2; }
-int filhoEsquerda(int i) { return (2 * i) + 1; }
-int filhoDireita(int i) { return (2 * i) + 2; }
-
-
-void prioridadeParaCima(FilaPrioritaria *f, int i) {
-
-    while (i != 0 && f->array[i].idade > f->array[pai(i)].idade) {
-
-        trocar(&f->array[i], &f->array[pai(i)]);
-        i = pai(i);
-    }
+int filaCheia(Fila *f) {
+    return (f->quantidade == MAX_FILA);
 }
 
-void prioridadeParaBaixo(FilaPrioritaria *f, int i) {
-    int maior = i;
-    int esq = filhoEsquerda(i);
-    int dir = filhoDireita(i);
-
-
-    if (esq < f->tamanho && f->array[esq].idade > f->array[maior].idade) {
-        maior = esq;
+int enfileirar(Fila *f, Cliente c) {
+    if (filaCheia(f)) {
+        tratar_erro(1); // Erro: Fila Cheia
+        return 0;
     }
+    f->clientes[f->fim] = c;
+    f->fim = (f->fim + 1) % MAX_FILA;
+    f->quantidade++;
+    return 1;
+}
 
-
-    if (dir < f->tamanho && f->array[dir].idade > f->array[maior].idade) {
-        maior = dir;
+Cliente desenfileirar(Fila *f) {
+    Cliente c = {"", "", "", 0, 0, 0, 0};
+    if (filaVazia(f)) {
+        tratar_erro(2); // Erro: Fila Vazia
+        return c;
     }
+    c = f->clientes[f->inicio];
+    f->inicio = (f->inicio + 1) % MAX_FILA;
+    f->quantidade--;
+    return c;
+}
 
-    if (maior != i) {
-        trocar(&f->array[i], &f->array[maior]);
-        prioridadeParaBaixo(f, maior);
+void exibirFila(Fila *f) {
+    if (filaVazia(f)) {
+        printf("Fila Comum vazia.\n");
+        return;
+    }
+    printf("--- Fila Comum (%d clientes) ---\n", f->quantidade);
+    int count = 0;
+    int i = f->inicio;
+    while (count < f->quantidade) {
+        printf("[%s] %s (Tipo: %s)\n", f->clientes[i].id, f->clientes[i].nome, f->clientes[i].tipo);
+        i = (i + 1) % MAX_FILA;
+        count++;
     }
 }
