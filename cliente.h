@@ -1,11 +1,17 @@
-#ifndef CLIENT_H
-#define CLIENT_H
+#ifndef CLIENTE_H
+#define CLIENTE_H
 
-#include "fila.h"
-#include "error.h"
+typedef struct {
+    char id[10];                // ID do CSV
+    char nome[50];
+    char tipo[20];              // "preferencial", "comum", "corporativo"
+    int idade;                  // Usado para ordenação no Heap
+    int prioridade;             // 1 = Prioritário (Heap), 0 = Comum (Fila)
+    int tempo_atendimento;      // Em minutos
+    int horario_chegada_min;    // Horário convertido em minutos
+} Cliente;
 
-
-
-void cadastrarCliente(Fila *filaComum, FilaPrioritaria *filaPrioritaria);
+// Função auxiliar para criação manual
+void criar_cliente(Cliente* c, char* nome, int idade, int prioridade);
 
 #endif
